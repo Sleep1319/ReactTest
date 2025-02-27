@@ -7,6 +7,7 @@ import AppNavbar from './layout/AppNavbar';
 function App() {
 
   //강제 로그아웃 상태 디비 연결후 변경 필요
+  //테스트용
   const [state, setState] = useState({
     userId: null,
     nickName: "",
