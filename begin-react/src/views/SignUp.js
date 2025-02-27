@@ -9,7 +9,7 @@ function SignUp() {
     const[nickname, setNickname] = useState("");
 
     const signUp = () => {
-        alert(`회원가입 시도`);
+        alert(`회원가입 시도 조건 체크 미구현`);
     };
 
     const resetForm = () => {
