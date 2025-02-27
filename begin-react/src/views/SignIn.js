@@ -5,6 +5,14 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const signInValidation = () => {
+        if(email == "" || password =="") {
+            alert('아이디와 비밀번호를 입력해 주세요요')
+        } else {
+            signIn();
+        }
+    };
+
     const signIn = () => {
         alert(`로그인 시도: 이메일 - ${email}, 비밀번호 - ${password}`);
     };
@@ -24,7 +32,7 @@ function SignIn() {
                 {/* 검증 미구현 */}
                 </div>
             </div>
-            <button type="button" className="btn btn-primary" onClick={signIn}>로그인</button>
+            <button type="button" className="btn btn-primary" onClick={signInValidation}>로그인</button>
         </div>
         <Link to="/">메인으로 이동</Link> / <Link to="/sign-up">회원가입</Link>
     </main>

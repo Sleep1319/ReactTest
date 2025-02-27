@@ -8,9 +8,22 @@ function SignUp() {
     const[username, setUsername] = useState("");
     const[nickname, setNickname] = useState("");
 
-    const signUp = () => {
-        alert(`회원가입 시도 조건 체크 미구현`);
+    const signUpValidation = () => {
+        if(email == "" || password == "" || username == "" || nickname == "") {
+            alert(`공백 발견`);
+            resetForm();
+        } else {
+            alert('회원가입 시도');
+            signUp();
+        }
     };
+
+    const signUp = () => {
+        //api호출 내용
+    };
+
+
+
 
     const resetForm = () => {
         setEmail("");
@@ -38,7 +51,7 @@ function SignUp() {
                     <label htmlFor="exampleInputNickname" className="form-label">닉네임</label>
                     <input type="text" className="form-control" id="exampleInputNickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
                 </div>
-                <button type="button" className="btn btn-primary" onClick={signUp}>가입</button>
+                <button type="button" className="btn btn-primary" onClick={signUpValidation}>가입</button>
                 <button type="button" className="btn btn-secondary" onClick={resetForm}>다시</button>
             </div>
             <Link to="/">메인으로 이동</Link> / <Link to="/sign-in">로그인</Link>
