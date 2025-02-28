@@ -7,7 +7,7 @@ function SignIn() {
 
     const signInValidation = () => {
         if(email == "" || password =="") {
-            alert('아이디와 비밀번호를 입력해 주세요요')
+            alert('아이디와 비밀번호를 입력해 주세요')
         } else {
             signIn();
         }
