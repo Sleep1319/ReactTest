@@ -4,12 +4,12 @@ import Main from "../views/Main";
 import SignIn from "../views/SignIn";
 import SignUp from "../views/SignUp";
 
-const AppRoutes = () => {
+function AppRoutes({ setState }) {
     return (
         <Routes>
             <Route path='/' element={<Main/>} />
-            <Route path='sign-in' element={<SignIn/>} />
-            <Route path="sign-up" element={<SignUp/>} />
+            <Route path='/sign-in' element={<SignIn setState={setState}/>} />
+            <Route path='/sign-up' element={<SignUp/>} />
         </Routes>
     );
 };

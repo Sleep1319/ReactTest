@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function SignUp(state) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [nickname, setNickname] = useState("");
+    const navigate = useNavigate();
+
+        useEffect(() => {
+            if (state?.userId) {
+                navigate("/");
+            }
+        }, [state, navigate]);
 
     const signUp = async (e) => {
         e.preventDefault(); // 폼 기본 제출 동작 막기
@@ -17,7 +25,7 @@ function SignUp() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/api/sign-up", {
+            const response = await axios.post("http://localhost:5000/api/sign-up", {
                 email,
                 password,
                 username,
@@ -25,10 +33,15 @@ function SignUp() {
             });
 
             alert(response.data.message);
-            resetForm();
+            window.location.href="/sign-in";
         } catch (error) {
             console.error("회원가입 오류: ", error);
-            alert("회원가입 실패");
+            if (error.response && error.response.data.error) {
+                alert(error.response.data.error); 
+            } else {
+                alert("회원가입입 실패! 다시 시도해주세요.");
+            }
+            resetForm();
         }
     };
 
@@ -61,8 +74,8 @@ function SignUp() {
                     <label htmlFor="exampleInputNickname" className="form-label">닉네임</label>
                     <input type="text" className="form-control" id="exampleInputNickname" value={nickname} onChange={(e) => setNickname(e.target.value)} />
                 </div>
-                <button type="subit" className="btn btn-primary" >가입</button>
-                <button type="button" className="btn btn-secondary" onClick={resetForm}>다시</button>
+                <button type="submit" className="btn btn-primary" >가입</button>
+                <button type="reset" className="btn btn-secondary">다시</button>
             </form>
             <Link to="/">메인으로 이동</Link> / <Link to="/sign-in">로그인</Link>
         </main>

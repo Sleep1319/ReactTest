@@ -22,18 +22,34 @@ db.connect((err) => {
     }
 });
 
-//로그인
-
-//회원가입
+//회원가입 중복검증식 추가가
 app.post("/api/sign-up", (req, res) => {
     const { email, password, username, nickname } = req.body;
-    const sql = "INSERT INTO member (null, email, password, username, nickname) VALUES (?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO member (email, password, username, nickname) VALUES (?, ?, ?, ?)";
     
-    db.query(sql, [email, password, username, nickname], (err, result) => {
+    db.query(sql, [email, password, username, nickname], (err, results) => {
         if (err) {
-            res.status(500).send(err);
+            return res.status(500).json({ error: "회원가입 중 오류 발생", details: err.sqlMessage });
+        } 
+        res.json({ message: "회원가입 성공!" });
+    });
+});
+
+//로그인
+app.post("/api/sign-in", (req, res) => {
+    const { email, password } = req.body;
+    const sql = "SELECT * FROM member where email = ? AND password = ?";
+
+    db.query(sql, [email, password], (err, results) => {
+        if (err) {
+            console.error("로그인 오류", err);
+            return res.status(500).json({ error: "서버 오류 발생" });
+        }
+
+        if (results.length > 0) {
+            res.json({ message: "로그인 성공!", user: results[0] });
         } else {
-            res.json({ message: "회원가입 성공!" });
+            res.status(401).json({ error: "이메일 또는 비밀번호가 틀렸습니다." });
         }
     });
 });

@@ -8,21 +8,22 @@ function App() {
 
   //강제 로그아웃 상태 디비 연결후 변경 필요
   //테스트용
-  const [state, setState] = useState({
-    userId: null,
-    nickName: "",
-    userRole: ""
-  });
+  const [state, setState] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : {};
+});
 
-  const logout = () => {
-    setState({ userId: null, nickName: "", userRole: "" });
-  };
+const logout = () => {
+    localStorage.removeItem("user");
+    setState({});
+    alert("로그아웃");
+};
 
   return (
     <>
       <Router>
         <AppNavbar state={state} logout={logout} />
-        <AppRoutes />
+        <AppRoutes state={state} setState={setState}/>
       </Router>
     </>
   );
