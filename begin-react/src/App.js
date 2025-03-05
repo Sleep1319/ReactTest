@@ -7,15 +7,20 @@ import AppNavbar from './layout/AppNavbar';
 function App() {
 
   //강제 로그아웃 상태 디비 연결후 변경 필요
-  //테스트용
-  const [state, setState] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : {};
+  //로컬스토리지지용
+//   const [state, setState] = useState(() => {
+//     const savedUser = localStorage.getItem("user");
+//     return savedUser ? JSON.parse(savedUser) : {};
+// });
+//세션용
+const [state, setState] = useState(() => {
+  const savedUser = sessionStorage.getItem("user");  // sessionStorage로 변경
+  return savedUser ? JSON.parse(savedUser) : null;
 });
 
 const logout = () => {
-    localStorage.removeItem("user");
-    setState({});
+    sessionStorage.removeItem("user");
+    setState(null);
     alert("로그아웃");
 };
 

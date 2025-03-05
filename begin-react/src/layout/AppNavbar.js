@@ -23,10 +23,10 @@ function AppNavbar({ state, logout }) {
                         ) : (
                             <>
                             <li className="nav-item">
-                                <span className="nav-link">닉네임: {state.nickName}</span>
+                                <span className="nav-link">닉네임: {state.nickname}</span>
                             </li>
                             <li className="nav-item">
-                                <span className="nav-link">등급: {state.userRole}</span>
+                                <span className="nav-link">등급: {state.roleName}</span>
                             </li>
                             <li className="nav-item">
                                 <button className="btn btn-danger" onClick={logout}>로그아웃</button>

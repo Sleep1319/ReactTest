@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn({state, setState}) {
     const [email, setEmail] = useState("");
@@ -27,13 +26,9 @@ function SignIn({state, setState}) {
                 password
             });
             if (response.data.user) {
-                alert(response.data.message);  
-                setState({
-                    userId: response.data.user.id,
-                    email: response.data.user.email,
-                    nickName: response.data.user.nickname,
-                    userRole: response.data.user.role
-                });
+                alert(response.data.message);
+                setState(response.data.user);//로그인 성공후 바로 상태값 변경
+                sessionStorage.setItem("user", JSON.stringify(response.data.user));
             }
             navigate("/");
             // window.location.href='/'

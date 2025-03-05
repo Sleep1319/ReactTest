@@ -1,10 +1,20 @@
 const express =require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const session = require('express-session')
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    credential: true
+}));
 app.use(express.json());
+
+app.use(session({
+    secret: "mySecretKey",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // HTTPS가 아니므로 false
+}));
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -38,7 +48,8 @@ app.post("/api/sign-up", (req, res) => {
 //로그인
 app.post("/api/sign-in", (req, res) => {
     const { email, password } = req.body;
-    const sql = "SELECT * FROM member where email = ? AND password = ?";
+    const sql = 
+    'SELECT m.id, m.email, m.username, m.nickname, r.role_name FROM member m JOIN member_roles mr ON m.id = mr.member_id JOIN roles r ON mr.role_id = r.id WHERE m.email = ? AND m.password = ?'
 
     db.query(sql, [email, password], (err, results) => {
         if (err) {
@@ -47,7 +58,14 @@ app.post("/api/sign-in", (req, res) => {
         }
 
         if (results.length > 0) {
-            res.json({ message: "로그인 성공!", user: results[0] });
+            const userData = {
+                userId: results[0].id,  // 'id'를 'userId'로 바꿈
+                email: results[0].email,
+                nickname: results[0].nickname,
+                roleName: results[0].role_name // 'role_name'은 그대로 반환
+            };
+        
+            res.status(200).json({ message: '로그인 성공!', user: userData });
         } else {
             res.status(401).json({ error: "이메일 또는 비밀번호가 틀렸습니다." });
         }
