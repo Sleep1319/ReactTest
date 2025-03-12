@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
-function AppNavbar({ state, logout }) {
+function AppNavbar( ) {
+    const { state, logout } = useUser();
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">

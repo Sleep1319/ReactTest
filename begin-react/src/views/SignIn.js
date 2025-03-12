@@ -1,17 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function SignIn({state, setState}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (state?.userId) {
-            navigate("/");
-        }
-    }, [state, navigate]);
+
 
     const signIn = async (e) => {
         e.preventDefault();
@@ -30,7 +28,7 @@ function SignIn({state, setState}) {
                 setState(response.data.user);//로그인 성공후 바로 상태값 변경
                 sessionStorage.setItem("user", JSON.stringify(response.data.user));
             }
-            navigate("/");
+            navigate("/");//리엑트 라우터 방식 상태를 유지한다
             // window.location.href='/'
             
         } catch (error) {

@@ -1,20 +1,12 @@
-import React, {useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-function SignUp(state) {
+function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [nickname, setNickname] = useState("");
-    const navigate = useNavigate();
-
-        useEffect(() => {
-            if (state?.userId) {
-                navigate("/");
-            }
-        }, [state, navigate]);
 
     const signUp = async (e) => {
         e.preventDefault(); // 폼 기본 제출 동작 막기
