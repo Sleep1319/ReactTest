@@ -144,10 +144,10 @@ app.post("/api/write-board", (req, res) =>{
 });
 
 //게시글 수정
-app.put("/api/updateBaord/:id", (req, res) => {
+app.put("/api/update-board/:id", (req, res) => {
     const { id } = req.params;
     const { content } = req.body
-    const sql = "UPDATE board SET content = ? WHRER id = ?";
+    const sql = "UPDATE board SET content = ? WHERE id = ?";
 
     db.query(sql, [content, id], (err) => {
         if (err) {
@@ -157,6 +157,21 @@ app.put("/api/updateBaord/:id", (req, res) => {
             res.json({message: "수정 완료"})
         }
     }); 
+});
+
+//게시글 삭제
+app.delete("/api/delete-board/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM board WHERE id = ?";
+
+    db.query(sql, [id], (err) => {
+        if(err) {
+            console.error("DB삭제에러: ", err);
+            res.status(500).json({ error: "DB에러" });
+        } else {
+            res.json({ message: "삭제 완료" });
+        }
+    });
 });
 
 // 서버 실행

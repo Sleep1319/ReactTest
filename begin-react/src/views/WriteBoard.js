@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, {useRef} from "react";
-import { Link, useNavigate } from "react-router-dom";    
+import { Link, useNavigate } from "react-router-dom"; 
+import { useUser } from "../context/UserContext";
 
-function WriteBoard({state}) {
+function WriteBoard() {
+    const { state } = useUser();
     const title = useRef(); //한 번만 가져와서 서버로 보내고 이동하는 기능이기에 useState로 상태 처리 없이 사용
     const content = useRef();
     const memberId = state?.userId

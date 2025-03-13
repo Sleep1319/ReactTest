@@ -7,20 +7,20 @@ import SignUp from "../views/SignUp";
 import Board from "../views/Board";
 import WriteBoard from "../views/WriteBoard";
 
-function AppRoutes({ state, setState }) {
+function AppRoutes() {
     return (
         <Routes>
             <Route path='/' element={<Main/>} />
             {/* 로그인시 이용 불가능*/}
-            <Route element={<ProtectedRoute state={state} requireAuth={false} />}>
-                <Route path="/sign-in" element={<SignIn setState={setState} />} />
+            <Route element={<ProtectedRoute requireAuth={false} />}>
+                <Route path="/sign-in" element={<SignIn/>} />
                 <Route path="/sign-up" element={<SignUp />} />
             </Route>
             {/* 로그인 후 이용가능 */}
-            <Route element={<ProtectedRoute state={state} requireAuth={true} />}>
-                <Route path="/write-board" element={<WriteBoard state={state}/>} />
+            <Route element={<ProtectedRoute requireAuth={true} />}>
+                <Route path="/write-board" element={<WriteBoard/>} />
             </Route>
-            <Route path="/board/:id" state={state} element={<Board/>} />
+            <Route path="/board/:id" element={<Board/>} />
         </Routes>
     );
 };

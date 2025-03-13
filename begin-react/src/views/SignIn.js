@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
-function SignIn({state, setState}) {
+function SignIn() {
+    const { state, setState } = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -22,11 +24,16 @@ function SignIn({state, setState}) {
             const response = await axios.post("http://localhost:5000/api/sign-in", {
                 email,
                 password
+                
             });
+            console.log("✅ 서버 응답:", response.data);
             if (response.data.user) {
                 alert(response.data.message);
+                console.log("setState 실행 전, 현재 state:", state);
                 setState(response.data.user);//로그인 성공후 바로 상태값 변경
+                console.log("setState 실행 후, 현재 state:", state);
                 sessionStorage.setItem("user", JSON.stringify(response.data.user));
+                console.log("✅ 세션에 저장된 값:", sessionStorage.getItem("user"));
             }
             navigate("/");//리엑트 라우터 방식 상태를 유지한다
             // window.location.href='/'
